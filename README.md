@@ -1,7 +1,7 @@
-# WISP Simulator Companion Web App
-
 ## Project Status
 This project was developed as a capstone project and is no longer actively maintained.
+
+# WISP Simulator Companion Web App
 
 This web application serves as the companion platform for the **WISP Training Simulator**, a capstone project designed to simulate wireless internet installation training and track user performance.
 
