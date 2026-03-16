@@ -1,0 +1,465 @@
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #f0f2f5;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.main-content {
+  padding: 15px;
+  flex: 1;
+  padding-left: 50px;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  background: #01073b;
+  color: #fff;
+  position: relative;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.companyName {
+  display: flex;
+  align-items: center;
+  margin-right: 55px;
+  gap: 15px;
+}
+
+.logo {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+  max-width: 1200px;
+  margin: 20px auto 40px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Page Header */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.page-header .btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.page-header .btn.danger {
+  background: #e74c3c;
+  color: #fff;
+}
+.page-header .btn.danger:hover {
+  background: #c0392b;
+}
+
+/* Dashboard Content */
+.dashboard-content h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.dashboard-content p {
+  margin-bottom: 15px;
+}
+
+/* Filters */
+.filter-group {
+  margin: 15px 0;
+}
+
+.filter-group select {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* Table */
+.user-table-container {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border: 1px solid #e0e0e0;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+/* Only enable horizontal scroll on desktop */
+@media (min-width: 769px) {
+  .user-table-container {
+    overflow-x: auto;
+  }
+}
+
+.user-table-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #01073b, #0a1a5e);
+  border-radius: 20px 20px 0 0;
+}
+
+.user-table-container h3 {
+  color: #2c3e50;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+/* Only set min-width on desktop */
+@media (min-width: 769px) {
+  .user-table {
+    min-width: 600px;
+  }
+}
+
+.user-table th,
+.user-table td {
+  border: none;
+  padding: 15px 18px;
+  text-align: left;
+  vertical-align: middle;
+  font-size: 14px;
+  word-break: break-word;
+  white-space: normal;
+  position: relative;
+}
+
+.user-table th {
+  background: linear-gradient(135deg, #01073b, #0a1a5e);
+  color: #fff;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.user-table th:first-child {
+  border-top-left-radius: 12px;
+}
+
+.user-table th:last-child {
+  border-top-right-radius: 12px;
+}
+
+.user-table tbody tr {
+  background: rgba(255,255,255,0.8);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.user-table tbody tr:nth-child(even) {
+  background: rgba(248,250,252,0.8);
+}
+
+.user-table tbody tr:hover {
+  background: linear-gradient(135deg, rgba(1, 7, 59, 0.08), rgba(10, 26, 94, 0.05));
+  transform: scale(1.01);
+  box-shadow: 0 4px 20px rgba(1, 7, 59, 0.15);
+}
+
+.user-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 12px;
+}
+
+.user-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 12px;
+}
+
+/* Activity Card (Mobile) */
+.activity-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.activity-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #01073b, #0a1a5e);
+}
+
+.activity-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(1, 7, 59, 0.15);
+}
+
+.activity-card p {
+  margin: 8px 0;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+.activity-card p strong {
+  color: #01073b;
+  font-weight: 600;
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: 20px;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn.secondary {
+  background: linear-gradient(135deg, #01073b, #0a1a5e);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(1, 7, 59, 0.3);
+}
+
+.btn.secondary:hover {
+  background: linear-gradient(135deg, #0a1a5e, #162d7a);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(1, 7, 59, 0.4);
+}
+
+.nav-link {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: 20px;
+  background: linear-gradient(135deg, #01073b, #0a1a5e);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(1, 7, 59, 0.3);
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.nav-link:hover::before {
+  left: 100%;
+}
+
+.nav-link:hover {
+  background: linear-gradient(135deg, #0a1a5e, #162d7a);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(1, 7, 59, 0.4);
+}
+
+/* Table Actions */
+.table-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.table-actions .left-actions {
+  flex: 1;
+}
+
+.table-actions .right-actions {
+  margin-left: auto;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+  color: #333;
+  background: none;
+}
+
+/* Loading Animation */
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(1, 7, 59, 0.3);
+  border-radius: 50%;
+  border-top-color: #01073b;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+.desktop-only { display: table; }
+.mobile-only { display: none; }
+
+@media (max-width: 768px) {
+  .desktop-only { display: none; }
+  .mobile-only { display: block; }
+
+  .dashboard-container {
+    margin: 80px 10px 20px;
+    padding: 15px;
+  }
+
+  .header {
+    padding: 8px 15px;
+  }
+
+  .companyName {
+    gap: 10px;
+    font-size: 16px;
+  }
+
+  .logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .table-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .table-actions .right-actions {
+    margin-left: 0;
+  }
+
+  .user-table-container {
+    padding: 20px 15px;
+    margin-top: 20px;
+  }
+
+  .user-table-container h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+}
+
+/* Extra small devices (≤576px) — Keep original mobile card view */
+@media (max-width: 576px) {
+  .user-table-container {
+    margin-top: 55px;
+    padding: 15px;
+    overflow-x: visible; /* Ensure no horizontal scroll */
+  }
+
+  .user-table {
+    min-width: auto; /* Remove minimum width constraint */
+  }
+
+  /* Hide the desktop table completely on mobile */
+  .desktop-only {
+    display: none !important;
+  }
+
+  /* Ensure mobile cards are properly displayed */
+  .mobile-only {
+    display: block !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn, .nav-link {
+    font-size: 12px;
+    padding: 8px 14px;
+  }
+
+  .companyName {
+    font-size: 14px;
+  }
+
+  .activity-card {
+    padding: 15px;
+    margin-bottom: 12px;
+  }
+
+  .activity-card p {
+    font-size: 13px;
+  }
+}

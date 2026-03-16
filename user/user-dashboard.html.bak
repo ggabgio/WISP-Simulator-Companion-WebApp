@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <header>
+      <h1>User Dashboard</h1>
+      <button id="userDashboardLogoutBtn" class="logout-btn">Logout</button>
+    </header>
+
+    <div class="dashboard-content">
+      <h2>Welcome back, <span id="userDashboardFullName">[Full Name]</span>!</h2>
+      <p>
+        Email: <span id="userDashboardEmail">[User Email]</span><br>
+        Age: <span id="userDashboardAge">[User Age]</span>
+      </p>
+      <p>You have <span id="userDashboardPendingCount">0</span> pending activities for the selected category.</p>
+
+      <div class="filters">
+        <label for="userDashboardActivityFilter">Show Progress For:</label>
+        <select id="userDashboardActivityFilter">
+          <option value="Training">Training</option>
+          <option value="Quiz">Quiz</option> <!-- Was Examination, now consolidated to Quiz -->
+          <option value="Assessment">Assessment</option>
+          <option value="Maintenance">Maintenance</option>
+        </select>
+      </div>
+
+      <table id="userDashboardActivitiesTable">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Level Name</th>
+            <th>Status (Score %)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="3">Loading activities...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script type="module" src="../assets/scripts.js"></script>
+</body>
+</html>

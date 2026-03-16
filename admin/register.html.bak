@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register New User</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- Background & Overlay -->
+  <div class="bg-image"></div>
+  <div class="bg-overlay"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <div class="logo">
+        <h1><i class="fas fa-graduation-cap"></i> Training Simulator</h1>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="admin-dashboard.html" class="nav-links">Back</a></li>
+        <li class="nav-item"><a href="#" class="nav-links" id="logoutBtn">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Register Form Container -->
+  <div class="main-content">
+    <div class="form-wrapper">
+      <h2 class="form-title">Register New User</h2>
+      <p class="form-subtitle">Fill in the details to create a new account.</p>
+      
+      <form id="registerForm" class="form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" required>
+          </div>
+          <div class="form-group">
+            <label for="middleName">Middle Name</label>
+            <input type="text" id="middleName">
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" id="age" min="1" required>
+          </div>
+          <div class="form-group">
+            <label for="newEmail">Email</label>
+            <input type="email" id="newEmail" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="newPassword">Password</label>
+            <input type="password" id="newPassword" required>
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="userRole">Role</label>
+          <select id="userRole" required>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+
+        <button type="submit" class="register-btn">Register User</button>
+        <p id="registerMessage" class="message"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 Training Simulator. All rights reserved.</p>
+  </footer>
+
+  <script type="module" src="assets/scripts.js"></script>
+</body>
+</html>
+

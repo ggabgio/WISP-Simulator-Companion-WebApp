@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Management</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/edit-users.css" />
+</head>
+
+<body>
+
+  <!-- Hamburger (for mobile) -->
+  <button class="hamburger" onclick="document.querySelector('.sidebar').classList.toggle('active')">
+    ☰
+  </button>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">
+      <img src="../assets/logo2.png" alt="Dela Cruz Network Solutions">
+      <span class="company-name">Dela Cruz Network Solutions</span>
+    </div>
+    <ul>
+      <li><a href="admin-dashboard.html" class="nav-link"><i class="fas fa-home"></i> Dashboard</a></li>
+      <li><a href="view-score.html" class="nav-link"><i class="fas fa-chart-line"></i> Score History</a></li>
+      <li><a href="edit-users.html" class="nav-link"><i class="fas fa-users-cog"></i> User Management</a></li>
+      <li><a href="../index.html" id="logoutBtn" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="form-wrapper">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+        <div>
+          <h2 class="form-title" style="margin: 0;">User Management</h2>
+          <p class="form-subtitle" style="margin: 5px 0 0 0;">View and manage user roles and account status.</p>
+        </div>
+        <button id="addNewUserBtn" class="btn-primary" style="flex: 0 0 auto;">
+          <i class="fas fa-user-plus"></i> Add New User
+        </button>
+      </div>
+
+      <div class="table-wrapper">
+        <div class="user-controls" style="margin: 10px 0 14px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+          <div style="flex: 1 1 260px; min-width: 220px;">
+            <input id="editUsersSearch" type="search" class="form-control" placeholder="Search by name or email" aria-label="Search users" />
+          </div>
+          <div style="flex: 0 0 auto;">
+            <label for="editUsersLimit" class="form-label" style="margin: 0 8px 0 0;">Show</label>
+            <select id="editUsersLimit" class="form-select" style="display: inline-block; width: auto;">
+              <option value="10">10</option>
+              <option value="25" selected>25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+              <option value="all">All</option>
+            </select>
+            <span style="margin-left: 6px;">users</span>
+          </div>
+        </div>
+        <table id="usersTable" class="user-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Example row -->
+            <tr data-name="A D Min">
+              <td data-label="Name">A D Min</td>
+              <td data-label="Email">admin@gmail.com</td>
+              <td data-label="Role">
+                <select>
+                  <option>Admin</option>
+                  <option>Employee</option>
+                  <option>Trainee</option>
+                </select>
+              </td>
+              <td data-label="Actions">
+                <!-- ✅ wrap in .action-buttons for flex layout -->
+                <div class="action-buttons">
+                  <button class="action-btn btn-save"><i class="fas fa-save"></i> Save</button>
+                  <button class="action-btn btn-block"><i class="fas fa-ban"></i> Deactivate</button>
+                </div>
+              </td>
+            </tr>
+            <!-- Dynamic rows populated via editUsers.js -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Feedback Message -->
+      <p id="editUsersMessage" class="message"></p>
+    </div>
+
+    <!-- Save Changes Confirmation Modal -->
+    <div id="saveChangesModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="saveChangesTitle">
+      <div class="modal-content confirmation-modal" role="document">
+        <div class="modal-header">
+          <h2 id="saveChangesTitle"><i class="fas fa-save"></i> Save Changes</h2>
+        </div>
+        <div class="modal-body">
+          <p id="saveChangesMessage">Are you sure you want to save these changes? This will update the user's role.</p>
+        </div>
+        <div class="modal-footer">
+          <button id="saveChangesCancel" class="btn secondary">Cancel</button>
+          <button id="saveChangesConfirm" class="btn primary">Save Changes</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Deactivate/Activate User Confirmation Modal -->
+    <div id="blockUserModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="blockUserTitle">
+      <div class="modal-content confirmation-modal" role="document">
+        <div class="modal-header">
+          <h2 id="blockUserTitle"><i class="fas fa-exclamation-triangle"></i> Deactivate/Activate User</h2>
+        </div>
+        <div class="modal-body">
+          <p id="blockUserMessage">Are you sure you want to change this user's activation status?</p>
+        </div>
+        <div class="modal-footer">
+          <button id="blockUserCancel" class="btn secondary">Cancel</button>
+          <button id="blockUserConfirm" class="btn primary danger">Confirm</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add New User Modal (Register Form) -->
+    <div id="addUserModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="addUserTitle">
+      <div class="modal-content register-modal" role="document">
+        <div class="modal-header">
+          <h2 id="addUserTitle"><i class="fas fa-user-plus"></i> Add New User</h2>
+          <button class="modal-close" id="closeAddUserModal" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="addUserForm">
+            <div class="form-group">
+              <label for="modalFirstName">First Name</label>
+              <input type="text" id="modalFirstName" required />
+            </div>
+            <div class="form-group">
+              <label for="modalMiddleName">Middle Name</label>
+              <input type="text" id="modalMiddleName" />
+            </div>
+            <div class="form-group">
+              <label for="modalLastName">Last Name</label>
+              <input type="text" id="modalLastName" required />
+            </div>
+            <div class="form-group">
+              <label for="modalBirthdate">Birthdate</label>
+              <input type="text" id="modalBirthdate" placeholder="MM/DD/YYYY" pattern="\d{2}/\d{2}/\d{4}" required title="Format: MM/DD/YYYY" maxlength="10" />
+              <small class="form-hint">Format: MM/DD/YYYY</small>
+            </div>
+            <div class="form-group">
+              <label for="modalEmail">Email</label>
+              <input type="email" id="modalEmail" required />
+            </div>
+            <div class="form-group">
+              <label for="modalPassword">Password</label>
+              <input type="password" id="modalPassword" required />
+            </div>
+            <div class="form-group">
+              <label for="modalConfirmPassword">Confirm Password</label>
+              <input type="password" id="modalConfirmPassword" required />
+            </div>
+            <div class="form-group">
+              <label for="modalRole">Role</label>
+              <select id="modalRole" required>
+                <option value="employee">Employee</option>
+                <option value="trainee">Trainee</option>
+              </select>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="cancelAddUser" class="btn secondary">Cancel</button>
+              <button type="submit" class="btn primary">
+                <i class="fas fa-user-plus"></i> Register
+              </button>
+            </div>
+          </form>
+          <p id="addUserMessage" class="message"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Modal for Registration -->
+    <div id="loadingModal" class="loading-modal">
+      <div class="loading-modal-content">
+        <div class="loading-spinner" id="loadingSpinner"></div>
+        <div class="success-checkmark" id="successCheckmark" style="display: none;">
+          <svg class="checkmark-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+            <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+          </svg>
+        </div>
+        <p class="loading-text" id="loadingText">Registering user...</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2025 Training Simulator. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Highlight active sidebar link
+    const links = document.querySelectorAll('.sidebar .nav-link');
+    const currentPage = window.location.pathname.split('/').pop();
+    links.forEach(link => {
+      if (link.getAttribute('href') === currentPage) {
+        link.classList.add('active');
+      }
+    });
+  </script>
+
+  <script type="module">
+    import { setupEditUsersPage } from '../js/editUsers.js';
+    document.addEventListener("DOMContentLoaded", () => {
+      setupEditUsersPage().catch(err => console.error("Fatal error:", err));
+    });
+  </script>
+</body>
+</html>

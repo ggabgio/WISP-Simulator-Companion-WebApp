@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Dashboard</title>
+
+  <!-- External Resources -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/user-dashboard.css">
+
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="companyName">
+      <img src="../assets/logo2.png" alt="Company Logo" class="logo"> 
+      <h2>Dela Cruz Network Solutions</h2>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="dashboard-container">
+      <header class="page-header">  
+      </header>
+
+      <div class="dashboard-content">
+        <h2>Welcome back, <span id="userDashboardFullName">[Full Name]</span>!</h2>
+        <p>
+          Email: <span id="userDashboardEmail">[User Email]</span><br>
+          Birthdate: <span id="userDashboardBirthdate">[User Birthdate]</span><br>
+          Role: <span id="userDashboardRole">[User Role]</span>
+        </p>
+        <p>You have <span id="userDashboardPendingCount">0</span> pending activities in this category.</p>
+
+        <!-- User Activities -->
+        <h3>My Activities</h3>
+
+        <div class="filter-group">
+          <select id="userDashboardActivityFilter">
+            <option value="Quiz">Quiz</option>
+            <option value="Training">Training</option>
+            <option value="Assessment">Assessment</option>
+            <option value="Maintenance">Maintenance</option>
+          </select>
+        </div>
+
+        <!-- Desktop Table -->
+        <table class="user-table desktop-only">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Level Name</th>
+              <th>Status (Score %)</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="userDashboardActivitiesTable">
+            <tr>
+              <td data-label="Category" colspan="4">Loading activities...</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Mobile Cards -->
+        <div id="userDashboardActivitiesCards" class="mobile-only">
+          <div class="activity-card">
+            <p><strong>Level:</strong> Crimping & Wires</p>
+            <p><strong>Status:</strong> Completed (70%)</p>
+            <p><strong>Category:</strong> Quiz</p>
+            <p><strong>Date:</strong> 9/25/2025, 1:15 AM</p>
+          </div>
+        </div>
+
+        <div class="table-actions">
+          <div class="left-actions">
+            <button id="printScoresBtn" class="btn secondary">
+              <i class="fas fa-print"></i> Print Scores
+            </button>
+          </div>
+          
+          <div class="right-actions">
+            <a href="#" id="userDashboardLogoutBtn" class="nav-link">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script type="module">
+    import '../js/firebase-config.js';
+    import { auth } from '../js/firebase-config.js';
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import { logoutUser, fetchUserProfile } from '../js/auth.js';
+    import { populateUserDashboardElements } from '../js/dashboard-user.js';
+
+    // Logout
+    document.getElementById('userDashboardLogoutBtn')?.addEventListener('click', async () => {
+      await logoutUser();
+    });
+
+    // Wait for auth state
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        console.log("[user-dashboard.html] Authenticated user:", user.uid, user.email);
+
+        // Fetch profile, then populate
+        const profile = await fetchUserProfile(user.uid);
+        if (profile) {
+          populateUserDashboardElements(profile);
+        } else {
+          console.warn("[user-dashboard.html] No profile found for user.");
+        }
+      } else {
+        console.warn("[user-dashboard.html] No user logged in. Redirecting...");
+        window.location.href = "../index.html";
+      }
+    });
+  </script>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 Training Simulator. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

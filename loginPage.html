@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DLC Network Solutions - Login</title>
+
+  <link rel="stylesheet" href="assets/loginPage.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <section class="hero">
+    <video autoplay muted loop playsinline class="hero-video">
+      <source src="assets/Dynamic BG.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+  <!-- Header (company only; no nav / no buttons) -->
+  <header class="header" role="banner">
+    <div class="companyName">
+      <img src="assets/logo2.png" alt="Dela Cruz Network Solutions logo" class="logo">
+      <h2>Dela Cruz Network Solutions</h2>
+    </div>
+  </header>
+
+  <!-- Main content (keeps same spacing as index via .main-content) -->
+  <main class="main-content" role="main">
+    <div class="login-container" aria-labelledby="login-title">
+      <div class="login-header">
+        <h2 id="login-title">Welcome Back!</h2>
+        <p>Sign in to access your training dashboard</p>
+      </div>
+      
+
+      <form id="loginForm" autocomplete="on" novalidate>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <div class="input-with-icon">
+            <i class="fas fa-envelope" aria-hidden="true"></i>
+            <input type="email" id="email" required placeholder="Enter your email" autocomplete="email">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-with-icon">
+            <i class="fas fa-lock" aria-hidden="true"></i>
+            <input type="password" id="password" required placeholder="Enter your password" autocomplete="current-password">
+          </div>
+        </div>
+
+        <button type="submit" class="login-btn">
+          <span>Login</span>
+          <i class="fas fa-arrow-right" aria-hidden="true"></i>
+        </button>
+      </form>
+
+      <p id="loginMessage" class="message" role="status" aria-live="polite"></p>
+
+      <div class="login-footer">
+        <a href="#" id="forgotPassword">Forgot password?</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <p>&copy; 2025 Dela Cruz Network Solutions. All rights reserved.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module">
+    // Mark this page as the login page before main.js runs.
+    // main.js (or other shared scripts) can check window.__IS_LOGIN_PAGE to avoid redirecting away.
+    window.__IS_LOGIN_PAGE = true;
+
+    // Small diagnostics so we can see what's happening in the console
+    console.log('[loginPage] loaded — referrer:', document.referrer, 'pathname:', location.pathname);
+
+    window.addEventListener('visibilitychange', () => {
+      console.log('[loginPage] visibilitychange:', document.visibilityState);
+    });
+    window.addEventListener('pagehide', (e) => {
+      console.log('[loginPage] pagehide — persisted:', e.persisted);
+    });
+    window.addEventListener('beforeunload', () => {
+      console.log('[loginPage] beforeunload fired');
+    });
+    window.addEventListener('popstate', () => {
+      console.log('[loginPage] popstate');
+    });
+
+    // static imports for config/util/auth (these won't execute main.js)
+    import './js/firebase-config.js';
+    import './js/constants.js';
+    import './js/utils.js';
+    import { loginUser, flushPersistentAuthMessage } from './js/auth.js';
+
+    // now import main.js dynamically AFTER we've set window.__IS_LOGIN_PAGE
+    import('./js/main.js').then(() => {
+      console.log('[loginPage] main.js imported');
+    }).catch(err => {
+      console.warn('[loginPage] main.js import failed or threw:', err);
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // DOM-safe: attach handlers
+      const form = document.getElementById('loginForm');
+      if (form) {
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+
+          // defensively clear any previous message
+          const msgEl = document.getElementById('loginMessage');
+          if (msgEl) msgEl.textContent = '';
+
+          const email = document.getElementById('email').value.trim();
+          const password = document.getElementById('password').value.trim();
+
+          try {
+            await loginUser(email, password);
+            // loginUser (or onAuthStateChanged) may redirect on success
+            console.log('[loginPage] loginUser resolved');
+          } catch (err) {
+            console.error('[loginPage] loginUser error', err);
+            if (msgEl) msgEl.textContent = err?.message || 'Login failed. Check credentials.';
+          }
+        });
+      }
+
+      const forgotLink = document.getElementById('forgotPassword');
+      if (forgotLink) {
+        forgotLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          alert('Please contact the administrator directly.');
+          window.location.href = 'https://www.facebook.com/profile.php?id=100095515633233';
+        });
+      }
+
+      // Clean up any auth messages stored by your auth flow
+      flushPersistentAuthMessage?.();
+      
+    });
+  </script>
+</body>
+</html>

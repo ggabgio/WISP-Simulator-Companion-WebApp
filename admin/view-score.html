@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Scores</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="../assets/view-score.css">
+  <!-- Select2 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+</head>
+
+<body>
+  
+  <!-- Hamburger (for mobile) -->
+  <button class="hamburger" onclick="document.querySelector('.sidebar').classList.toggle('active')">
+    ☰
+  </button>
+
+  <div class="page-wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="logo">
+        <img src="../assets/logo2.png" alt="Dela Cruz Network Solutions" class="logo-img">
+        <span class="company-name">Dela Cruz Network Solutions</span>
+      </div>
+      <ul>
+        <li><a href="admin-dashboard.html" class="nav-link"><i class="fas fa-home"></i> Dashboard</a></li>
+        <li><a href="view-score.html" class="nav-link active"><i class="fas fa-chart-line"></i> Score History</a></li>
+        <li><a href="edit-users.html" class="nav-link"><i class="fas fa-users-cog"></i> User Management</a></li>
+        <li><a href="../index.html" id="logoutBtn" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+      <div class="dashboard-container">
+        <!-- Page Header -->
+        <header class="page-header">
+          <h1><i class="fas fa-chart-line"></i> All User Scores</h1>
+        </header>
+
+        <div class="content">
+          <div class="filters">
+            <label for="viewScoresActivityTypeFilter">Filter by Activity Type:</label>
+            <select id="viewScoresActivityTypeFilter">
+              <option value="all">All Activities</option>
+              <option value="Training">Training</option>
+              <option value="Quiz">Quiz</option>
+              <option value="Assessment">Assessment</option>
+              <option value="Maintenance">Maintenance</option>
+            </select>
+
+            <label for="viewScoresModuleFilter">Filter by Module (Keyword):</label>
+            <select id="viewScoresModuleFilter"></select>
+
+            <select id="viewScoresAttemptFilter">
+              <option value="first">First Attempt Only</option>
+              <option value="all">All Attempts</option>
+            </select>
+
+            <label for="excludeUserFilter">Exclude Users:</label>
+            <select id="excludeUserFilter" multiple size="3" style="min-width:200px;">
+              <!-- populated dynamically -->
+            </select>
+
+            <button id="printScoresBtn" class="btn primary">
+              <i class="fas fa-print"></i> Print Scores
+            </button>
+          </div>
+
+          <table id="scoresTable" class="display" style="width:100%;">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Level/Activity Name</th>
+                <th>Score (%)</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="scoresTableBody"></tbody>
+          </table>
+        </div>
+
+        <div id="totalScoresModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="totalScoresTitle">
+          <div class="modal-content" role="document">
+            <span class="close-btn" id="closeTotalScoresModalBtn" aria-label="Close">×</span>
+            <h2 id="totalScoresTitle"><i class="fas fa-trophy"></i> Total Scores by User</h2>
+            <div class="modal-filters">
+              <label for="totalScoreActivityTypeFilter">Activity Type for Totals:</label>
+              <select id="totalScoreActivityTypeFilter">
+                <option value="Training">Training</option>
+                <option value="Quiz">Quiz</option>
+                <option value="Assessment">Assessment</option>
+                <option value="Maintenance">Maintenance</option>
+              </select>
+            </div>
+            <div class="modal-table">
+              <table id="totalScoresTable" class="display" style="width:100%;">
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Total Score (%)</th>
+                  </tr>
+                </thead>
+                <tbody id="totalScoresTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Clear Entry Confirmation Modal -->
+        <div id="clearEntryModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="clearEntryTitle">
+          <div class="modal-content confirmation-modal" role="document">
+            <div class="modal-header">
+              <h2 id="clearEntryTitle"><i class="fas fa-exclamation-triangle"></i> Clear Entry</h2>
+            </div>
+            <div class="modal-body">
+              <p id="clearEntryMessage">Are you sure you want to clear this score entry? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+              <button id="clearEntryCancel" class="btn secondary">Cancel</button>
+              <button id="clearEntryConfirm" class="btn primary danger">Clear Entry</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Clear All Scores Confirmation Modal -->
+        <div id="clearAllScoresModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="clearAllScoresTitle">
+          <div class="modal-content confirmation-modal" role="document">
+            <div class="modal-header">
+              <h2 id="clearAllScoresTitle"><i class="fas fa-exclamation-triangle"></i> Clear All Scores</h2>
+            </div>
+            <div class="modal-body">
+              <p id="clearAllScoresMessage">Are you sure you want to clear ALL scores for this user? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+              <button id="clearAllScoresCancel" class="btn secondary">Cancel</button>
+              <button id="clearAllScoresConfirm" class="btn primary danger">Clear All Scores</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 Training Simulator. All rights reserved.</p>
+  </footer>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <!-- DataTables -->
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <!-- Select2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <!-- Firebase Config -->
+  <script type="module" src="../js/firebase-config.js"></script>
+  <!-- Auth -->
+  <script type="module" src="../js/auth.js"></script>
+  <!-- Constants -->
+  <script type="module" src="../js/constants.js"></script>
+  <!-- Scores -->
+  <script type="module">
+    import { setupViewScoresPage } from "../js/scores.js";
+    setupViewScoresPage();
+  </script>
+
+ <script>
+    const links = document.querySelectorAll('.sidebar .nav-link');
+    const currentPage = window.location.pathname.split('/').pop();
+    links.forEach(link => {
+      if (link.getAttribute('href') === currentPage) {
+        link.classList.add('active');
+      }
+    });
+    
+  </script>
+  </script>
+</body>
+</html>

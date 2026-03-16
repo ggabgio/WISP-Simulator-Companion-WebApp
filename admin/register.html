@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+   <link rel="stylesheet" href="../assets/register.css">
+
+</head>
+
+<body>
+
+    <!-- Hamburger (for mobile) -->
+  <button class="hamburger" onclick="document.querySelector('.sidebar').classList.toggle('active')">
+    ☰
+  </button>
+
+ <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">
+      <img src="../assets/logo2.png" alt="Dela Cruz Network Solutions">
+      <span class="company-name">Dela Cruz Network Solutions</span>
+    </div>
+    <ul>
+      <li><a href="admin-dashboard.html" class="nav-link"><i class="fas fa-home"></i> Dashboard</a></li>
+      <li><a href="register.html" class="nav-link"><i class="fas fa-user-plus"></i> Register</a></li>
+      <li><a href="view-score.html" class="nav-link"><i class="fas fa-chart-line"></i> Score History</a></li>
+      <li><a href="edit-users.html" class="nav-link"><i class="fas fa-users-cog"></i> User Management</a></li>
+      <li><a href="../index.html" id="logoutBtn" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="center-wrapper">
+      <div class="form-wrapper">
+        <h2 class="form-title">Register New User</h2>
+        <p class="form-subtitle">Fill in details to create a new account.</p>
+
+        <form id="registerForm">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" required />
+          </div>
+          <div class="form-group">
+            <label for="middleName">Middle Name</label>
+            <input type="text" id="middleName" />
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" required />
+          </div>
+          <div class="form-group">
+            <label for="birthdate">Birthdate</label>
+            <input type="text" id="birthdate" placeholder="MM/DD/YYYY" pattern="\d{2}/\d{2}/\d{4}" required title="Format: MM/DD/YYYY" maxlength="10" />
+            <small class="form-hint">Format: MM/DD/YYYY</small>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" required />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" required />
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" required />
+          </div>
+          <div class="form-group">
+            <label for="role">Role</label>
+            <select id="role" required>
+              <option value="employee">Employee</option>
+              <option value="trainee">Trainee</option>
+            </select>
+          </div>
+          <button type="submit" class="login-btn">
+            <span>Register</span>
+            <i class="fas fa-user-plus"></i>
+          </button>
+        </form>
+        <p id="registerMessage" class="message"></p>
+      </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div id="loadingModal" class="loading-modal">
+      <div class="loading-modal-content">
+        <div class="loading-spinner" id="loadingSpinner"></div>
+        <div class="success-checkmark" id="successCheckmark" style="display: none;">
+          <svg class="checkmark-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+            <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+          </svg>
+        </div>
+        <p class="loading-text" id="loadingText">Registering user...</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2025 Training Simulator. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="../js/firebase-config.js"></script>
+  <script type="module" src="../js/register.js"></script>
+  
+
+  <!-- Auto-highlight current page -->
+  <script>
+    const links = document.querySelectorAll('.sidebar .nav-link');
+    const currentPage = window.location.pathname.split('/').pop(); 
+    links.forEach(link => {
+      if (link.getAttribute('href') === currentPage) {
+        link.classList.add('active');
+      }
+    });
+  </script>
+</body>
+</html>

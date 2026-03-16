@@ -1,0 +1,18 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyATpGBKRLyVI7dHmdBx6FObdr4fyKSyk1s", // Your actual key
+    authDomain: "training-simulator-9d1fd.firebaseapp.com",
+    databaseURL: "https://training-simulator-9d1fd-default-rtdb.firebaseio.com",
+    projectId: "training-simulator-9d1fd",
+    storageBucket: "training-simulator-9d1fd.firebasestorage.app",
+    messagingSenderId: "390554588394",
+    appId: "1:390554588394:web:7c09dc32fbe7113f4c3393",
+    measurementId: "G-RS4XQHJJ05"
+  };
+
+const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
+export const auth = getAuth(app); // Ensure this line is exactly as shown

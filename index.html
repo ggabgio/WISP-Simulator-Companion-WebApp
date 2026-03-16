@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DLC Network Solutions</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header" role="banner">
+    <!-- Left side: Company name and About dropdown -->
+    <div class="header-left">
+      <div class="companyName">
+        <img src="assets/logo2.png" alt="Company Logo" class="logo">
+        <h2>Dela Cruz Network Solutions</h2>
+      </div>
+      
+      <!-- Desktop Navigation (visible on wide screens) -->
+      <nav class="nav-links" role="navigation" aria-label="Main navigation">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#services" class="nav-link">Services</a>
+      </nav>
+    </div>
+
+    <!-- Hamburger visible on mobile -->
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <!-- simple icon; you can replace with <i class="fa fa-bars"></i> if preferred -->
+      ☰
+    </button>
+
+    <!-- Desktop header buttons -->
+    <div class="header-buttons">
+      <a href="loginPage.html" class="btn login-btn">Login</a>
+    </div>
+  </header>
+
+  <!-- Mobile Dropdown (appears under header on mobile) -->
+  <div class="mobile-menu" aria-hidden="true">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+
+    <div class="header-buttons">
+      <a href="loginPage.html" class="btn login-btn">Login</a>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <video autoplay muted loop playsinline class="hero-video">
+      <source src="assets/Dynamic BG.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="hero-overlay">
+      <h1>
+        <span class="animated-headlines">
+          <span>Connecting Communities</span>
+          <span>Empowering Homes</span>
+          <span>Building the Future</span>
+        </span>
+      </h1>
+      <p class="hero-sub">Reliable, high-speed wireless internet for everybody's homes.</p>
+    </div>
+  </section>
+
+  <!-- Connectivity Panels -->
+  <section id="services" class="connectivity">
+    <h2>Connectivity starts here</h2>
+    <p>Empowering communities through seamless wireless connectivity and reliable internet solutions.</p>
+    <div class="panels">
+      <div class="panel">
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="assets/antenna.jpg" alt="Urban internet coverage">
+              <div class="panel-title">Rural Coverage</div>
+            </div>
+            <div class="flip-card-back">
+              <h3>Rural Coverage</h3>
+              <p>Advanced wireless solutions designed to deliver consistent and fast internet access to rural regions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="assets/stockphoto.jpg" alt="Community working on internet">
+              <div class="panel-title">Network Maintenance</div>
+            </div>
+            <div class="flip-card-back">
+              <h3>Network Maintenance</h3>
+              <p>Keeping networks strong and stable through consistent maintenance and expert technical care.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="assets/p2pantennastock.jpg" alt="Wireless antenna">
+              <div class="panel-title">Wireless Solutions</div>
+            </div>
+            <div class="flip-card-back">
+              <h3>Wireless Solutions</h3>
+              <p>Cutting-edge wireless technology providing seamless internet access without the need for cables.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Section -->
+  <div class="main-content">
+    <div class="accordion-intro reveal">
+      <h2 class="section-title">Who We Are</h2>
+      <p class="section-subtitle">At Dela Cruz Network Solutions, we’re dedicated to building connections that empower communities and drive progress.</p>
+      <!-- Inline infographic: Connect / Deliver / Support -->
+      <aside class="info-steps reveal" aria-label="How we work">
+        <div class="step">
+          <div class="icon"><i class="fa-solid fa-signal" aria-hidden="true"></i></div>
+          <div class="content">
+            <h3>Connect</h3>
+            <p>Using wireless towers</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="icon"><i class="fa-solid fa-bolt" aria-hidden="true"></i></div>
+          <div class="content">
+            <h3>Deliver</h3>
+            <p>High-speed internet</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="icon"><i class="fa-solid fa-headset" aria-hidden="true"></i></div>
+          <div class="content">
+            <h3>Support</h3>
+            <p>Reliable network support service</p>
+          </div>
+        </div>
+      </aside>
+    </div>
+    <!-- Left Column: Accordion + Instructions -->
+    <div class="left-column">
+      <div class="accordion reveal">
+        <div class="accordion-item">
+          <div class="accordion-header" data-target="about">
+            <h2><i class="fa-solid fa-info-circle"></i> About</h2>
+            <span class="accordion-icon">+</span>
+          </div>
+          <div class="accordion-content" id="about">
+            <p>
+              At Dela Cruz Network Solutions, we deliver fast, reliable, and affordable wireless internet to homes across the region. As a trusted Wireless Internet Service Provider (WISP), we use cutting-edge technology to keep you connected—whether you're in the city or a remote area. Our team is dedicated to providing exceptional service and dependable connectivity for today and the future.
+            </p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" data-target="mission">
+            <h2><i class="fa-solid fa-bullseye"></i> Mission</h2>
+            <span class="accordion-icon">+</span>
+          </div>
+          <div class="accordion-content" id="mission">
+            <p>
+              We aim to close the digital gap by providing fast, affordable, and dependable internet access for everyone. Through innovation and dedicated service, we empower communities to thrive in an increasingly connected world.
+            </p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" data-target="vision">
+            <h2><i class="fa-solid fa-lightbulb"></i> Vision</h2>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-content" id="vision">
+          <p>
+            To be the most trusted and innovative Wireless Internet Service Provider, delivering unmatched connectivity solutions that empower individuals. We envision a future where every person, or family, regardless of location, has access to reliable, high-speed internet, enabling them to fully engage in the digital world.
+          </p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" data-target="contact">
+          <h2><i class="fa-solid fa-envelope"></i> Contact Us</h2>
+          <span class="accordion-icon">+</span>
+        </div>
+        <div class="accordion-content" id="contact">
+          <p>Email: support@delacruznetworking.com</p>
+          <p>Phone: +63 912 345 6789</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 Dela Cruz Network Solutions. All rights reserved.</p>
+  </footer>
+
+  <script src="js/index.js"></script>
+
+</body>
+</html>

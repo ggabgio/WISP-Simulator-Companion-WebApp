@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Users</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- Background & Overlay -->
+  <div class="bg-image"></div>
+  <div class="bg-overlay"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <div class="logo">
+        <h1><i class="fas fa-graduation-cap"></i> Training Simulator</h1>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="admin-dashboard.html" class="nav-links">Dashboard</a></li>
+        <li class="nav-item"><a href="#" class="nav-links" id="logoutBtn">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="form-wrapper">
+      <h2 class="form-title">Edit Users</h2>
+      <p class="form-subtitle">View and manage user roles or remove accounts.</p>
+
+      <div class="table-wrapper">
+        <table id="usersTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- User rows will be populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 Training Simulator. All rights reserved.</p>
+  </footer>
+
+  <script type="module" src="assets/scripts.js"></script>
+</body>
+</html>

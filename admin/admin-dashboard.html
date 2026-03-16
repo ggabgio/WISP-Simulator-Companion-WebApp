@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+
+  <!-- Bootstrap -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+  />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../assets/admin-dashboard.css" />
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script type="module">
+    import '../js/firebase-config.js';
+    import '../js/constants.js';
+    import '../js/utils.js';
+    import '../js/auth.js';
+    import { populateAdminUserTable, populateLeaderboardChart } from '../js/dashboard-admin.js';
+    import '../js/main.js';
+
+    document.getElementById('logoutBtn')?.addEventListener('click', async () => {
+      const { logoutUser } = await import('../js/auth.js');
+      await logoutUser();
+    });
+
+    // Populate the dashboard after page loads
+    window.addEventListener('DOMContentLoaded', () => {
+      populateLeaderboardChart();
+      populateAdminUserTable();
+    });
+  </script>
+</head>
+
+<body>
+
+  <!-- Hamburger (for mobile) -->
+  <button class="hamburger" onclick="document.querySelector('.sidebar').classList.toggle('active')">
+    ☰
+  </button>
+
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">
+      <img
+        src="../assets/logo2.png"
+        alt="Dela Cruz Network Solutions"
+      />
+      <span class="company-name">Dela Cruz Network Solutions</span>
+    </div>
+    <ul>
+      <li>
+        <a href="admin-dashboard.html" class="nav-link active">
+          <i class="fas fa-home"></i> Dashboard
+        </a>
+      </li>
+      <li>
+        <a href="view-score.html" class="nav-link">
+          <i class="fas fa-chart-line"></i> Score History
+        </a>
+      </li>
+      <li>
+        <a href="edit-users.html" class="nav-link">
+          <i class="fas fa-users-cog"></i> User Management
+        </a>
+      </li>
+      <li>
+        <a href="../index.html" id="logoutBtn" class="nav-link">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="dashboard-container">
+      <div class="admin-container">
+        <!-- Bar Chart Leaderboard -->
+        <div class="chart-container">
+          <h3><i class="fas fa-chart-bar"></i> User Performance Leaderboard</h3>
+          
+          <!-- Category Selector -->
+          <div class="chart-controls">
+            <label for="categorySelect">Select Category:</label>
+            <select id="categorySelect" class="form-select" style="display: inline-block; width: auto;">
+              <option value="Quiz">Quiz</option>
+              <option value="Training">Training</option>
+              <option value="Assessment">Assessment</option>
+              <option value="Maintenance">Maintenance</option>
+            </select>
+          </div>
+          
+          <!-- Chart Canvas -->
+          <div class="chart-wrapper">
+            <canvas id="leaderboardBarChart"></canvas>
+          </div>
+        </div>
+
+        <!-- User Information Table -->
+        <div class="user-table-container">
+          <h3>Users Information List</h3>
+          <div class="user-controls" style="margin: 10px 0 14px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+            <div style="flex: 1 1 260px; min-width: 220px;">
+              <input id="userSearch" type="search" class="form-control" placeholder="Search by name or email" aria-label="Search users" />
+            </div>
+            <div style="flex: 0 0 auto;">
+              <label for="userFilter" class="form-label" style="margin: 0 8px 0 0;">Filter:</label>
+              <select id="userFilter" class="form-select" style="display: inline-block; width: auto;">
+                <option value="all" selected>All</option>
+                <option value="archived">Archived</option>
+                <option value="deactivated">Deactivated</option>
+              </select>
+            </div>
+            <div style="flex: 0 0 auto;">
+              <label for="userDisplayLimit" class="form-label" style="margin: 0 8px 0 0;">Show</label>
+              <select id="userDisplayLimit" class="form-select" style="display: inline-block; width: auto;">
+                <option value="10">10</option>
+                <option value="25" selected>25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="all">All</option>
+              </select>
+              <span style="margin-left: 6px;">users</span>
+            </div>
+          </div>
+          <table class="user-table">
+            <thead>
+              <tr>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Last Name</th>
+                <th>Birthdate</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="user-table-body">
+              <!-- Sample static row for illustration; JS will replace -->
+              <tr>
+                <td data-label="First Name">Juan</td>
+                <td data-label="Middle Name">Santos</td>
+                <td data-label="Last Name">Dela Cruz</td>
+                <td data-label="Birthdate">02/12/2002</td>
+                <td data-label="Email">juan.delacruz@example.com</td>
+                <td data-label="Role">Admin</td>
+                <td data-label="Actions">
+                  <a href="view-user.html" class="btn btn-info btn-sm">
+                    <i class="fas fa-eye"></i> View
+                  </a>
+                  <a href="../assets/edit-users.html" class="edit-btn">
+                    <i class="fas fa-edit"></i> Edit
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2025 Training Simulator. All rights reserved.</p>
+    </footer>
+
+    <script type="module" src="../js/auth.js"></script>
+  </div>
+
+  <!-- Removed inline Firestore loader; handled in dashboard-admin.js -->
+
+  <!-- Sidebar highlight -->
+  <script>
+    const links = document.querySelectorAll('.sidebar .nav-link');
+    const currentPage = window.location.pathname.split('/').pop();
+    links.forEach(link => {
+      if (link.getAttribute('href') === currentPage) {
+        link.classList.add('active');
+      }
+    });
+  </script>  
+
+</body>
+</html>
