@@ -27,7 +27,7 @@ Administrators have access to additional management tools within the web applica
 
 Admins can:
 
-* View the **global leaderboard**
+* View the **leaderboards**
 * Manage and update **user scores**
 * Assign or modify **user roles**
 * Register **new user accounts**
